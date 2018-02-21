@@ -6,6 +6,7 @@
 package ja07clinicaveterinaria;
 
 import java.awt.SystemColor;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -24,7 +25,8 @@ public class AplicacionClinicaVeterinaria {
         Clinica cli = null;
         Vacuna v = null;
         Vacuna vacunaActiva = null;
-        Calendar fecha = null;
+        VacunaPerro vp = null;
+        Calendar fecha = Calendar.getInstance();
         Perro perro;
         Perro perroActivo;
         String nombre = null;
@@ -33,7 +35,20 @@ public class AplicacionClinicaVeterinaria {
         do {
             menu();
             opc = teclado.nextInt();
+            teclado.nextLine();
             switch (opc) {
+                case 9:
+                    cli = new Clinica("asd");
+                    v = new Vacuna(1, 2, "3", 4);
+                    Vacuna v1 = new Vacuna(2, 3, "4", 5);
+                    cli.addVacuna(v);
+                    cli.addVacuna(v1);
+                     perro = new Perro("pepet", "raza", null, null);
+                    cli.addPerro(perro);
+                     perro = new Perro("junet", "fullhd", null, null);
+                    cli.addPerro(perro);
+                    break;
+                    
                 case 1:
                     System.out.println("Introduce nombre para la Veterinaria");
                     nombre = teclado.nextLine();
@@ -62,24 +77,23 @@ public class AplicacionClinicaVeterinaria {
                     System.out.println("introduce raza perro");
                     raza = teclado.nextLine();
 
-                    perro = new Perro(nombre, raza, null);
-
+                    perro = new Perro(nombre, raza, null, null);
+                    cli.addPerro(perro);
+                    
                     break;
                 case 4:
                     int año,
-                     dia,
                      mes,
-                     hora,
-                     min;
+                     dia;
 
                     System.out.println("introduce nombre perro");
                     nombre = teclado.nextLine();
                     perroActivo = cli.buscarPerro(nombre);
-                    if (perroActivo != null) {
+                    if (perroActivo == null) {
                         System.out.println("introduce raza perro");
                         raza = teclado.nextLine();
 
-                        perroActivo = new Perro(nombre, raza, null);
+                        perroActivo = new Perro(nombre, raza, null, null);
                     }
 
                     System.out.println("Que vacuna quieres introducir (id)");
@@ -92,13 +106,56 @@ public class AplicacionClinicaVeterinaria {
                     mes = teclado.nextInt();
                     System.out.println("introduce dia");
                     dia = teclado.nextInt();
-                    System.out.println("introduce horas");
-                    hora = teclado.nextInt();
-                    System.out.println("introduce minutos");
-                    min = teclado.nextInt();
 
-                    fecha.set(año, mes, dia, hora,min, 0);
 
+                    fecha.set(año,mes,dia);
+                    System.out.println(fecha);
+
+                    vp = new VacunaPerro(fecha, vacunaActiva);
+                   
+                    
+                    
+                    
+                    if (perroActivo.buscarVacunaPerro(vp)) {
+                        perroActivo.addVacuna(vp);
+                    } else {
+                        System.out.println("no ser posible vacunar al ser vivo");
+                    }
+
+                    break;
+                case 5:
+                    System.out.println("introduce nombre perro");
+                    nombre = teclado.nextLine();
+                    perroActivo = cli.buscarPerro(nombre);
+                    System.out.println("clinica " + cli.getNombre());
+                    perroActivo.mostrarVacunaPerro();
+                    break;
+                case 6:
+                    System.out.println("introduce nombre perro");
+                    nombre = teclado.nextLine();
+                    perroActivo = cli.buscarPerro(nombre);
+                    if (perroActivo != null) {
+                        System.out.println("clinica " + cli.getNombre());
+                        perroActivo.mostrarVacunaPerro();
+
+                        perroActivo.ajustarFecha();
+
+                        System.out.println(perroActivo.getFechaProx());
+                    } else {
+                        System.out.println("el perro no existe");
+                    }
+
+                    break;
+                case 7:
+                    ArrayList<Perro> arrayperros = new ArrayList<>();
+                    System.out.println("Que vacuna quieres introducir (id)");
+                    cli.mostrarVacunas();
+                    id = teclado.nextInt();
+                    vacunaActiva = cli.obtenerVacuna(id);
+                    arrayperros = cli.listadoVacunasPerro(v);
+                    for (Perro arrayperro : arrayperros) {
+                        System.out.println(arrayperro);
+                    }
                     break;
             }
         } while (opc != 0);
@@ -106,10 +163,10 @@ public class AplicacionClinicaVeterinaria {
     }
 
     private static void menu() {
-        System.out.println("1.");
-        System.out.println("2.");
-        System.out.println("3.");
-        System.out.println("4.");
+        System.out.println("1.crear veterinaria");
+        System.out.println("2.crear vacuna");
+        System.out.println("3.crear perros");
+        System.out.println("4.insertar vacuna al perro");
         System.out.println("5.");
     }
 

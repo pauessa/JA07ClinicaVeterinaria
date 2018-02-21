@@ -5,6 +5,7 @@
  */
 package ja07clinicaveterinaria;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -15,15 +16,24 @@ public class Perro {
     private String nombre;
     private String raza;
     private Calendar fechaProx;
+    private ArrayList<VacunaPerro> vacunap;
 
     public Perro() {
     }
 
-    public Perro(String nombre, String raza, Calendar fechaProx) {
+    public Perro(String nombre, String raza, Calendar fechaProx, ArrayList<VacunaPerro> vacunap) {
         this.nombre = nombre;
         this.raza = raza;
         this.fechaProx = fechaProx;
+        vacunap=new ArrayList<VacunaPerro>();
     }
+
+    @Override
+    public String toString() {
+        return "Perro{" + "nombre=" + nombre + ", raza=" + raza + ", fechaProx=" + fechaProx + ", vacunap=" + vacunap + '}';
+    }
+
+ 
     
 
     public String getNombre() {
@@ -48,6 +58,51 @@ public class Perro {
 
     public void setFechaProx(Calendar fechaProx) {
         this.fechaProx = fechaProx;
+    }
+    public void addVacuna(VacunaPerro vp){
+        vacunap.add(vp);
+    }
+    
+    public boolean buscarVacunaPerro(VacunaPerro vp){
+         
+        for (VacunaPerro vacunaPerro : vacunap) {
+           
+            if((vp.getFecha().equals(vacunaPerro.getFecha())) && (vp.getVacuna().equals(vacunaPerro.getVacuna()))){
+              
+                return false;
+            } 
+        }
+       
+        return true;
+        
+        
+    }
+    public void mostrarVacunaPerro(){
+        for (VacunaPerro vacunaPerro : vacunap) {
+            System.out.println(vacunaPerro);
+        }
+    }
+    
+    public void ajustarFecha(){
+        Calendar fechamax=null;
+        for (VacunaPerro vacunaPerro : vacunap) {
+            if (vacunaPerro.getFecha().after(fechamax)) {
+                fechamax=vacunaPerro.getFecha();
+            }
+        }
+        fechamax.add(Calendar.YEAR, 1);
+        setFechaProx(fechamax);
+            
+        }
+    public Perro mostrarVacunaConcreta(Vacuna v){
+      
+        for (VacunaPerro vacunaPerro : vacunap) {
+            if(vacunaPerro.getVacuna().equals(v)){
+              return this;
+            }
+            
+        }
+        return null;
     }
     
 }

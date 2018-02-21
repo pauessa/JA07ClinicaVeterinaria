@@ -66,5 +66,13 @@ public class Clinica {
          return null;
     }
     
+    public ArrayList listadoVacunasPerro(Vacuna v){
+        ArrayList<Perro> p=new ArrayList<Perro>();
+        for (Perro perro : perros) {
+            p.add(perro.mostrarVacunaConcreta(v));
+        }
+        return p;
+    }
+    
     
 }
