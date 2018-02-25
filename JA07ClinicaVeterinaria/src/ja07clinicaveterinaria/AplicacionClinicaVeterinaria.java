@@ -32,6 +32,7 @@ public class AplicacionClinicaVeterinaria {
         String nombre = null;
         String raza = null;
         int opc = 0;
+        ArrayList<Perro> arrayperros =null;
         do {
             menu();
             opc = teclado.nextInt();
@@ -43,12 +44,12 @@ public class AplicacionClinicaVeterinaria {
                     Vacuna v1 = new Vacuna(2, 3, "4", 5);
                     cli.addVacuna(v);
                     cli.addVacuna(v1);
-                     perro = new Perro("pepet", "raza", null, null);
+                    perro = new Perro("pepet", "raza", null);
                     cli.addPerro(perro);
-                     perro = new Perro("junet", "fullhd", null, null);
+                    perro = new Perro("juanet", "fullhd", null);
                     cli.addPerro(perro);
                     break;
-                    
+
                 case 1:
                     System.out.println("Introduce nombre para la Veterinaria");
                     nombre = teclado.nextLine();
@@ -77,9 +78,9 @@ public class AplicacionClinicaVeterinaria {
                     System.out.println("introduce raza perro");
                     raza = teclado.nextLine();
 
-                    perro = new Perro(nombre, raza, null, null);
+                    perro = new Perro(nombre, raza, null);
                     cli.addPerro(perro);
-                    
+
                     break;
                 case 4:
                     int año,
@@ -93,7 +94,7 @@ public class AplicacionClinicaVeterinaria {
                         System.out.println("introduce raza perro");
                         raza = teclado.nextLine();
 
-                        perroActivo = new Perro(nombre, raza, null, null);
+                        perroActivo = new Perro(nombre, raza, null);
                     }
 
                     System.out.println("Que vacuna quieres introducir (id)");
@@ -107,15 +108,10 @@ public class AplicacionClinicaVeterinaria {
                     System.out.println("introduce dia");
                     dia = teclado.nextInt();
 
-
-                    fecha.set(año,mes,dia);
-                    System.out.println(fecha);
+                    fecha.set(año, mes, dia);
 
                     vp = new VacunaPerro(fecha, vacunaActiva);
-                   
-                    
-                    
-                    
+
                     if (perroActivo.buscarVacunaPerro(vp)) {
                         perroActivo.addVacuna(vp);
                     } else {
@@ -140,22 +136,28 @@ public class AplicacionClinicaVeterinaria {
 
                         perroActivo.ajustarFecha();
 
-                        System.out.println(perroActivo.getFechaProx());
+                        System.out.println(perroActivo.getFechaProx().getTime());
                     } else {
                         System.out.println("el perro no existe");
                     }
 
                     break;
                 case 7:
-                    ArrayList<Perro> arrayperros = new ArrayList<>();
-                    System.out.println("Que vacuna quieres introducir (id)");
+                    arrayperros = new ArrayList<>();
+                    System.out.println("Que vacuna quieres buscar (id)");
                     cli.mostrarVacunas();
                     id = teclado.nextInt();
                     vacunaActiva = cli.obtenerVacuna(id);
                     arrayperros = cli.listadoVacunasPerro(v);
-                    for (Perro arrayperro : arrayperros) {
-                        System.out.println(arrayperro);
-                    }
+                    mostrarListado(arrayperros);
+
+                    break;
+                case 8:
+                    arrayperros = new ArrayList<>();
+                    System.out.println("introduce mes");
+                    mes=teclado.nextInt();
+                    arrayperros=cli.buscarPerroMes(mes);
+                    mostrarListado(arrayperros);
                     break;
             }
         } while (opc != 0);
@@ -168,6 +170,15 @@ public class AplicacionClinicaVeterinaria {
         System.out.println("3.crear perros");
         System.out.println("4.insertar vacuna al perro");
         System.out.println("5.");
+    }
+
+    private static void mostrarListado(ArrayList<Perro> arrayperros) {
+        for (Perro arrayperro : arrayperros) {
+            if (arrayperro!=null) {
+                 System.out.println(arrayperro);
+            }
+           
+        }
     }
 
 }

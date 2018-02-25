@@ -6,6 +6,7 @@
 package ja07clinicaveterinaria;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Vector;
 
 /**
@@ -73,6 +74,16 @@ public class Clinica {
         }
         return p;
     }
-    
+    public ArrayList buscarPerroMes(int mes){
+        ArrayList<Perro> p=new ArrayList<Perro>();
+        for (Perro perro : perros) { 
+            if(perro.getFechaProx().get(Calendar.MONTH)==mes){
+                p.add(perro);
+            }
+           
+        }
+        return p;
+        
+    }
     
 }

@@ -21,7 +21,7 @@ public class Perro {
     public Perro() {
     }
 
-    public Perro(String nombre, String raza, Calendar fechaProx, ArrayList<VacunaPerro> vacunap) {
+    public Perro(String nombre, String raza, Calendar fechaProx) {
         this.nombre = nombre;
         this.raza = raza;
         this.fechaProx = fechaProx;
@@ -30,7 +30,7 @@ public class Perro {
 
     @Override
     public String toString() {
-        return "Perro{" + "nombre=" + nombre + ", raza=" + raza + ", fechaProx=" + fechaProx + ", vacunap=" + vacunap + '}';
+        return "Perro{" + "nombre=" + nombre + ", raza=" + raza + ", fechaProx=" + fechaProx.getTime() + ", vacunap=" + vacunap + '}';
     }
 
  
@@ -64,9 +64,9 @@ public class Perro {
     }
     
     public boolean buscarVacunaPerro(VacunaPerro vp){
-         
+        
         for (VacunaPerro vacunaPerro : vacunap) {
-           
+            
             if((vp.getFecha().equals(vacunaPerro.getFecha())) && (vp.getVacuna().equals(vacunaPerro.getVacuna()))){
               
                 return false;
@@ -84,7 +84,8 @@ public class Perro {
     }
     
     public void ajustarFecha(){
-        Calendar fechamax=null;
+        Calendar fechamax=Calendar.getInstance();
+        fechamax.set(1000, 1,1);
         for (VacunaPerro vacunaPerro : vacunap) {
             if (vacunaPerro.getFecha().after(fechamax)) {
                 fechamax=vacunaPerro.getFecha();

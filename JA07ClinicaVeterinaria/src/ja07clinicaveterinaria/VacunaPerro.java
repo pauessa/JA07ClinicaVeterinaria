@@ -25,7 +25,7 @@ public class VacunaPerro {
 
     @Override
     public String toString() {
-        return "VacunaP{" + "fecha=" + fecha + ", vacuna=" + vacuna + '}';
+        return "VacunaP{" + "fecha=" + fecha.getTime() + ", vacuna=" + vacuna + '}';
     }
 
     public Calendar getFecha() {
